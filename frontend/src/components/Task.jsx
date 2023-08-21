@@ -13,7 +13,14 @@ import DoneIcon from "@mui/icons-material/Done";
 
 export default function Task({ task, expanded, handleChange, setTasks, setOpenEditTask, setEditTask }){
 
-
+    const completeTask = (task) => {
+      setTasks(tasks => tasks.map(t => t === task ? t = {...t, isComplete: true} : t))
+      axios.put('http://localhost:3000/api/tasks/complete', {
+        id : task.id
+      })
+      .catch(err => console.log(err))
+    }
+  
     const deleteTask = (id) => {
       setTasks(tasks => tasks.filter(task => task.id !== id))
       axios.delete(`http://localhost:3000/api/tasks/delete`, {
@@ -40,7 +47,7 @@ export default function Task({ task, expanded, handleChange, setTasks, setOpenEd
               {task.content}
               <Stack direction="row" sx={{alignSelf:"flex-end"}}>
                 <Tooltip title="Mark task complete">
-                  <IconButton onClick={() => {setTasks(tasks => tasks.map(t => t === task ? t = {...t, isComplete: true} : t))}}><DoneIcon/></IconButton>
+                  <IconButton onClick={() => {completeTask(task)}}><DoneIcon/></IconButton>
                 </Tooltip>
                 <Tooltip title="Edit task">
                   <IconButton onClick={() => {setOpenEditTask(true); setEditTask(task)}}><EditIcon/></IconButton>
