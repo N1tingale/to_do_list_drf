@@ -19,7 +19,7 @@ export default function Tasks({
     <Stack>
       {tasks.map((task) =>
         showCompleted
-          ? task.is_complete && (
+          ? task.isComplete && (
               <Task
                 setEditTask={setEditTask}
                 setOpenEditTask={setOpenEditTask}
@@ -30,7 +30,7 @@ export default function Tasks({
                 handleChange={handleChange}
               />
             )
-          : !task.is_complete && (
+          : !task.isComplete && (
               <Task
                 setEditTask={setEditTask}
                 setOpenEditTask={setOpenEditTask}
