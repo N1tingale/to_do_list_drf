@@ -13,8 +13,8 @@ datasource db {
 model Task {
   id Int @id @default(autoincrement())
   title String
-  content String
-  edited Boolean
-  editedAt DateTime
-  isComplete Boolean
+  content String?
+  edited Boolean @default(false)
+  editedAt DateTime @default(now())
+  isComplete Boolean @default(false)
 }
