@@ -85,6 +85,7 @@ app.put("/tasks/complete", async(req, res) => {
         isComplete: true
       }
     })
+    res.status(200).json(updatedTask)
   }
   catch (error) {
     console.error(error)

@@ -15,7 +15,7 @@ export default function Task({ task, expanded, handleChange, setTasks, setOpenEd
 
     const completeTask = (task) => {
       setTasks(tasks => tasks.map(t => t === task ? t = {...t, isComplete: true} : t))
-      axios.put('http://localhost:3000/api/tasks/complete', {
+      axios.put('http://localhost:3000/tasks/complete', {
         id : task.id
       })
       .catch(err => console.log(err))
@@ -23,11 +23,22 @@ export default function Task({ task, expanded, handleChange, setTasks, setOpenEd
   
     const deleteTask = (id) => {
       setTasks(tasks => tasks.filter(task => task.id !== id))
-      axios.delete(`http://localhost:3000/api/tasks/delete`, {
-        id : task.id
+      console.log({
+        "id": id
       })
-      .catch(err => console.log(err))
-    }
+      axios.delete(`http://localhost:3000/tasks/delete`, {
+        data: {
+          id: id
+        }
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    };
+    
  
     return (
         <Accordion  sx={{width: "40vw" ,  bgcolor:task.isComplete ? "#FFD699" : "inherit"}} expanded={expanded === `task${task.id}`} onChange={handleChange(`task${task.id}`)}>
