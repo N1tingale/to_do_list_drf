@@ -73,6 +73,25 @@ app.put("/tasks/update", async(req, res) => {
   }
 })
 
+
+app.put("/tasks/complete", async(req, res) => {
+  try {
+    const { id } = req.body
+    const updatedTask = await prisma.task.update({
+      where: {
+        id : id
+      }, 
+      data : {
+        isComplete: true
+      }
+    })
+  }
+  catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "An error occurred" });
+  }
+})
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
