@@ -23,7 +23,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/tasks-get/")
+      .get("http://localhost:3000/tasks")
       .then((res) => setTasks(res.data));
   }, []);
 

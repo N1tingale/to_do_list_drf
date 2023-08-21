@@ -22,13 +22,13 @@ export default function EditTask({ open, setOpen, task, setTasks }) {
     const editedTitle = titleInputRef.current.value;
     const editedDescription = descriptionInputRef.current.value;
 
-    const updatedTask = { ...task, title: editedTitle, description: editedDescription };
+    const updatedTask = { ...task, title: editedTitle, content: editedDescription };
 
-    axios.put(`http://localhost:8000/api/tasks-update/${task.id}/`, 
+    axios.put(`http://localhost:3000/tasks/update`, 
     {    
+             id: task.id, 
              title: editedTitle,
-             description: editedDescription,
-             is_complete: false  
+             content: editedDescription, 
     })
     .then(res => {
       setTasks(tasks => tasks.map(t => t.id !== task.id ? t : res.data))
@@ -84,7 +84,7 @@ export default function EditTask({ open, setOpen, task, setTasks }) {
           />
           <CustomTextField
             inputRef={descriptionInputRef}
-            defaultValue={task.description}
+            defaultValue={task.content}
             sx={{ mt: 3 }}
             fullWidth
             id="standard-multiline-flexible"

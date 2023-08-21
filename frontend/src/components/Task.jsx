@@ -16,12 +16,14 @@ export default function Task({ task, expanded, handleChange, setTasks, setOpenEd
 
     const deleteTask = (id) => {
       setTasks(tasks => tasks.filter(task => task.id !== id))
-      axios.delete(`http://localhost:8000/api/tasks-delete/${id}/`)
+      axios.delete(`http://localhost:3000/api/tasks/delete`, {
+        id : task.id
+      })
       .catch(err => console.log(err))
     }
  
     return (
-        <Accordion  sx={{width: "40vw" ,  bgcolor:task.is_complete ? "#FFD699" : "inherit"}} expanded={expanded === `task${task.id}`} onChange={handleChange(`task${task.id}`)}>
+        <Accordion  sx={{width: "40vw" ,  bgcolor:task.isComplete ? "#FFD699" : "inherit"}} expanded={expanded === `task${task.id}`} onChange={handleChange(`task${task.id}`)}>
             <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
@@ -30,15 +32,15 @@ export default function Task({ task, expanded, handleChange, setTasks, setOpenEd
           <Typography variant='h6' fontWeight="400" sx={{ width: '33%', flexShrink: 0 }}>
             {task.title}
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>{task.edited ? 'Edited at' : 'Created at'} {formatDateTime(task.time_edited)}</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>{task.edited ? 'Edited at' : 'Created at'} {formatDateTime(task.editedAt)}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography component="span">
-            <Stack direction="row" justifyContent={`${task.description ? "space-between": "flex-end"}`}>
-              {task.description}
+            <Stack direction="row" justifyContent={`${task.content ? "space-between": "flex-end"}`}>
+              {task.content}
               <Stack direction="row" sx={{alignSelf:"flex-end"}}>
                 <Tooltip title="Mark task complete">
-                  <IconButton onClick={() => {setTasks(tasks => tasks.map(t => t === task ? t = {...t, is_complete: true} : t))}}><DoneIcon/></IconButton>
+                  <IconButton onClick={() => {setTasks(tasks => tasks.map(t => t === task ? t = {...t, isComplete: true} : t))}}><DoneIcon/></IconButton>
                 </Tooltip>
                 <Tooltip title="Edit task">
                   <IconButton onClick={() => {setOpenEditTask(true); setEditTask(task)}}><EditIcon/></IconButton>

@@ -32,8 +32,9 @@ export default function CreateTask({ open, setOpen, setTasks }) {
     const editedTitle = titleInputRef.current.value;
     const editedDescription = descriptionInputRef.current.value;
 
-    const createdTask = {title: editedTitle, description: editedDescription };
-    axios.post("http://localhost:8000/api/tasks-create/", createdTask)
+    const createdTask = {title: editedTitle, content: editedDescription };
+    console.log(createdTask)
+    axios.post("http://localhost:3000/tasks/create", createdTask)
     .then(res =>  setTasks(tasks => [...tasks, res.data]))
     .catch(err => console.log(err))
     setOpen(false)
